@@ -1,6 +1,21 @@
 # Spectra-Normalization-Tool
 Spectre Normalization Tool (SNT), written by Diogo Marques
 
+## Installation:
+
+```shell
+git clone git@github.com:iastro-pt/Spectra-Normalization-Tool.git
+```
+```shell
+cd Spectra-Normalization-Tool
+```
+```shell
+pip install .
+```
+
+## How to use:
+
+See the jupyter notebook in the examples folder
 
 ## Configuring the tool
 

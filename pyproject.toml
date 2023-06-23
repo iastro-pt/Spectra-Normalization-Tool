@@ -4,9 +4,6 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "SNT"
-authors = [
-    {name = "André Silva", email = "Andre.Silva@astro.up.pt"}
-]
 description = "Tool to normalize stellar spectra"
 readme = "README.rst"
 requires-python = ">=3.1"

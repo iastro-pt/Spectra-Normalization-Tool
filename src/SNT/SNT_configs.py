@@ -4,6 +4,7 @@ from SNT.configs import InternalParameters, DefaultValues, UserParam, IntegerVal
 
 from tabletexifier import Table
 
+
 class SNT_Configs:
     _default_params = DefaultValues(
         remove_n_first=UserParam(default_value=3000, constraint=Positive_Value_Constraint + IntegerValue,
@@ -29,7 +30,7 @@ class SNT_Configs:
                           constraint=BooleanValue,
                           comment="use RIC to avoid large 'dips' in the continuum (see documentation)"
                           ),
-        interp=UserParam(default_value="cubic",
+        interp=UserParam(default_value="linear",
                          constraint=ValueFromList(["cubic", "linear"]),
                          comment="interpolation type"
                          ),
