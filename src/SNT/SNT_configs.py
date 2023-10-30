@@ -7,7 +7,8 @@ from tabletexifier import Table
 
 class SNT_Configs:
     _default_params = DefaultValues(
-        remove_n_first=UserParam(default_value=3000, constraint=Positive_Value_Constraint + IntegerValue,
+        remove_n_first=UserParam(default_value=3000,
+                                 constraint=Positive_Value_Constraint + IntegerValue,
                                  comment="removes the first n points in the spectra (only if first points are not useful!) otherwise set to 0"
                                  ),
         radius_min=UserParam(default_value=20,
