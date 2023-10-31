@@ -259,7 +259,7 @@ class InternalParameters:
         return to_write
 
     def __setitem__(self, key, value):
-        logger.warning(f"Internal configs are being updated in real time ({key=})")
+        logger.warning(f"Internal configs are being updated in real time ({key}={value})")
         try:
             parameter_def_information = self._default_params[key]
         except KeyError:
