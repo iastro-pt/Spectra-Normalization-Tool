@@ -3,5 +3,4 @@ scipy~=1.10.1
 astropy~=5.2.2
 matplotlib~=3.5.1
 loguru~=0.6.0
-sbart~=0.1.3
 tabletexifier~=0.1.9

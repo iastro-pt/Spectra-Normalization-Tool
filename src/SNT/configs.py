@@ -5,7 +5,13 @@ from typing import Any, Dict, NoReturn, Optional
 import numpy as np
 from loguru import logger
 
-from SBART.utils.custom_exceptions import InvalidConfiguration, InternalError
+
+class InternalError(Exception):
+    pass
+
+
+class InvalidConfiguration(Exception):
+    pass
 
 
 class Constraint:
@@ -61,12 +67,12 @@ class ValueInInterval(Constraint):
         except TypeError:
             raise InvalidConfiguration(
                 f"Config ({param_name}) value can't be compared with the the interval: {type(value)} vs {self._interval}"
-            )
+                )
 
         if not good_value:
             raise InvalidConfiguration(
                 f"Config ({param_name}) value not inside the interval: {value} vs {self._interval}"
-            )
+                )
 
 
 class ValueFromDtype(Constraint):
@@ -78,7 +84,8 @@ class ValueFromDtype(Constraint):
         if not isinstance(value, self.valid_dtypes):
             raise InvalidConfiguration(
                 f"Config ({param_name}) value ({value}) not from the valid dtypes: {type(value)} vs {self.valid_dtypes}"
-            )
+                )
+
 
 class ValueFromList(Constraint):
     def __init__(self, available_options):
@@ -99,7 +106,7 @@ class ValueFromList(Constraint):
         if bad_value:
             raise InvalidConfiguration(
                 f"Config ({param_name})  value not one of the valid ones: {value} vs {self.available_options}"
-            )
+                )
 
 
 class IterableMustHave(Constraint):
@@ -127,7 +134,7 @@ class IterableMustHave(Constraint):
         if not good_value:
             raise InvalidConfiguration(
                 f"Config ({param_name}) value {value} does not have {self.mode} of {self.available_options}"
-            )
+                )
 
 
 Positive_Value_Constraint = ValueInInterval([0, np.inf], include_edges=True)
@@ -149,7 +156,7 @@ class UserParam:
             mandatory: bool = False,
             quiet: bool = False,
             comment: Optional[str] = None
-    ):
+            ):
         self._valueConstraint = constraint if constraint is not None else Constraint("")
         self._default_value = default_value
         self._mandatory = mandatory
@@ -208,7 +215,7 @@ class InternalParameters:
                         "{} received a configuration flag that is not recognized: {}",
                         self._name_of_parent,
                         key,
-                    )
+                        )
                 continue
             try:
                 parameter_def_information.apply_constraints_to_value(key, value)
@@ -242,7 +249,7 @@ class InternalParameters:
                         "Configuration <{}> using the default value: {}",
                         key,
                         default_param.default_value,
-                    )
+                        )
                 try:
                     self._user_configs[key] = default_param.default_value
                 except Exception as e:
@@ -270,7 +277,7 @@ class InternalParameters:
                     "{} received a configuration flag that is not recognized: {}",
                     self._name_of_parent,
                     key,
-                )
+                    )
         try:
             parameter_def_information.apply_constraints_to_value(key, value)
         except InvalidConfiguration as exc:
@@ -294,6 +301,7 @@ class InternalParameters:
 
     def get_description_of_config(self, name):
         return self._default_params[name].description
+
 
 class DefaultValues:
     """
