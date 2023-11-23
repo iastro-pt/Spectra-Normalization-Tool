@@ -20,12 +20,19 @@ def normalize_spectra(
         output_path,
         config,
         FWHM_KW: Optional[str] = None,
+        FWHM_override: Optional[float] = None,
         store_to_disk: bool = True
         ):
+
     min_lambda = min(wavelengths)
     if FWHM_KW is None:
         FWHM_KW = 'HIERARCH ESO QC CCF FWHM'
-    FWHM = header[FWHM_KW]  # FWHM in Km/s
+
+    if FWHM_override is not None:
+        FWHM = FWHM_override
+    else:
+        FWHM = header[FWHM_KW]  # FWHM in Km/s
+
     FWHM_WL = min_lambda * (FWHM / (constant.c / 1000))  # FWHM in A
     # FWHM_WL=0.1 in case the spectre doesn't include information about FWHM
 
