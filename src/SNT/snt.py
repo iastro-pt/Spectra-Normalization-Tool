@@ -19,7 +19,8 @@ def normalize_spectra(
         header,
         output_path,
         config,
-        FWHM_KW: Optional[str] = None
+        FWHM_KW: Optional[str] = None,
+        store_to_disk: bool = True
         ):
     min_lambda = min(wavelengths)
     if FWHM_KW is None:
@@ -58,8 +59,8 @@ def normalize_spectra(
     s1 = p_map.rolling_max(spectra_clip, wavelengths_clip, FWHM_WL * 40)
     s2 = p_map.rolling_max(spectra_clip, wavelengths_clip, FWHM_WL * 40 * 10)
 
-    ys1 = s1(wavelengths_clip)
-    ys2 = s2(wavelengths_clip)
+    # ys1 = s1(wavelengths_clip)
+    # ys2 = s2(wavelengths_clip)
 
     ps = p_map.penalty(s1, s2, wavelengths_clip)
     if radius_max < 4:
@@ -101,30 +102,36 @@ def normalize_spectra(
     if not isinstance(output_path, Path):
         output_path = Path(output_path)
     output_path /= "SNT_data"
-    output_path.mkdir(exist_ok=True)
 
-    logger.info(f"Data storage folder set to {output_path}")
-    logger.info("Saving text files")
-    np.savetxt(
-        fname=output_path/"anchors.csv",
-        X=np.c_[anchors_x, anchors_y], delimiter=",", header="anchorsX, anchorsY"
-        )
+    if store_to_disk:
+        output_path.mkdir(exist_ok=True)
 
-    np.savetxt(
-        fname=output_path/"continuum.txt",
-        X=np.c_[wavelengths, y_inter], delimiter=",", header="wave, flux"
-        )
-    logger.info("Generating plots")
-    # plot
-    fig, ax = plt.subplots(2, sharex=True)
-    ax[0].plot(wavelengths, spectra)
-    ax[0].scatter(max_pos, max_ys, color='g', s=15)
-    ax[0].scatter(anchors_x, anchors_y, color='r', s=20)
-    ax[0].plot(wavelengths, y_inter, color='r')
-    ax[0].set_ylabel("flux")
-    ax[1].plot(wavelengths_clip, ps)
-    ax[1].plot(step_x, step_y, color='black')
-    ax[1].set_xlabel("wavelengths")
-    ax[1].set_ylabel("RIC")
-    fig.savefig(output_path / "continuum_plot.png", dpi = 600)
-    # ----------------------------------
+        logger.info(f"Data storage folder set to {output_path}")
+        logger.info("Saving text files")
+        np.savetxt(
+            fname=output_path/"anchors.csv",
+            X=np.c_[anchors_x, anchors_y], delimiter=",", header="anchorsX, anchorsY"
+            )
+
+        np.savetxt(
+            fname=output_path/"continuum.txt",
+            X=np.c_[wavelengths, y_inter], delimiter=",", header="wave, flux"
+            )
+        logger.info("Generating plots")
+        # plot
+        fig, ax = plt.subplots(2, sharex=True)
+        ax[0].plot(wavelengths, spectra)
+        ax[0].scatter(max_pos, max_ys, color='g', s=15)
+        ax[0].scatter(anchors_x, anchors_y, color='r', s=20)
+        ax[0].plot(wavelengths, y_inter, color='r')
+        ax[0].set_ylabel("flux")
+        ax[1].plot(wavelengths_clip, ps)
+        ax[1].plot(step_x, step_y, color='black')
+        ax[1].set_xlabel("wavelengths")
+        ax[1].set_ylabel("RIC")
+        fig.savefig(output_path / "continuum_plot.png", dpi = 600)
+        # ----------------------------------
+    else:
+        logger.warning("Disabled disk storage of data products")
+
+    return y_inter
