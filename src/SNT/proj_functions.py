@@ -165,7 +165,7 @@ class a_shape:  # Defines methods for computing the alpha hull
         max_lambda = max(xs)
         min_flux = min(ys)
         max_flux = max(ys)
-        furthest_point = math.sqrt(pow(max_lambda, 2) + pow(max_flux, 2))
+        furthest_point = math.sqrt(pow(max_lambda, 2) + pow(max_flux, 2)) * global_stretch  # <--adjusted to reflect stretching
 
         P = np.array([xs[max_index[0]], smooth.normalize(ys[max_index[0]], min_lambda, max_lambda, min_flux, max_flux, w_stretch)])
         Pidx = 0  # index in the max_index array of current anchor
