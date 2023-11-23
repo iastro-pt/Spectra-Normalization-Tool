@@ -62,7 +62,11 @@ def normalize_spectra(
     ys2 = s2(wavelengths_clip)
 
     ps = p_map.penalty(s1, s2, wavelengths_clip)
-    step_y, step_x = p_map.step_transform(ps, wavelengths_clip, radius_max / 4)
+    if radius_max < 4:
+        step = 1
+    else:
+        step = radius_max / 4
+    step_y, step_x = p_map.step_transform(ps, wavelengths_clip, step)
 
     # ----------Alpha shape maxima selection---------------------
 
