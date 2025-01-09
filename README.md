@@ -1,5 +1,5 @@
 # Spectra-Normalization-Tool
-Spectre Normalization Tool (SNT), written by Diogo Marques
+Spectre Normalization Tool (SNT)
 
 ## Installation:
 
@@ -48,3 +48,7 @@ Or check the full table that is provided here:
 | denoising_distance | number of points to calculate the average around a maximum if use_denoise is True, useful for noisy spectra |
 
 
+## Contributors
+
+Diogo Marques
+André M. Silva 
