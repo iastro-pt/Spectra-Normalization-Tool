@@ -12,7 +12,6 @@ from matplotlib import pyplot as plt
 from scipy.signal import find_peaks, savgol_filter
 
 from SNT import alphashape, interpolators, penalty, smooth
-from SNT.utils.json_compatible import json_ready_converter
 from SNT.utils.SNT_configs import construct_SNT_configs
 
 if TYPE_CHECKING:
@@ -95,8 +94,11 @@ def normalize_spectra(
         logger.info(f"Data storage folder set to {output_path}")
         logger.info("Saving text files")
 
+        anchors = {}
+        for key in ["anchors_x", "anchors_y"]:
+            anchors[key] = byproducts[key]
         with open(output_path / f"{fname}_anchors.csv", mode="w") as tow:
-            json.dump(fp=tow, obj=json_ready_converter(byproducts))
+            json.dump(fp=tow, obj=anchors)
 
         array1 = wavelengths.T
         array2 = continuum_values.T
@@ -204,4 +206,5 @@ def normalize_row(wavelengths, spectra, FWHM, config):
         "step_x": step_x,
         "ps": ps,
     }
+
     return fx(wavelengths), fit_metrics
