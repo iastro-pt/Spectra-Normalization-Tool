@@ -1,17 +1,17 @@
 from typing import Any
 
-from SNT.configs import (
-    InternalParameters,
-    DefaultValues,
-    UserParam,
-    IntegerValue,
-    Positive_Value_Constraint,
-    BooleanValue,
-    ValueFromList,
-    NumericValue,
-)
-
 from tabletexifier import Table
+
+from SNT.configs import (
+    BooleanValue,
+    DefaultValues,
+    IntegerValue,
+    InternalParameters,
+    NumericValue,
+    Positive_Value_Constraint,
+    UserParam,
+    ValueFromList,
+)
 
 
 class SNT_Configs:
