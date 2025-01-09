@@ -262,11 +262,14 @@ class p_map:  # defines methods for computing the penalty map (to increase or de
     @staticmethod
     def penalty(s1, s2, wavelengths):  # calculates the relative difference between continuums s1 and s2
         ps = []
-        for w in wavelengths:
-            if (math.isnan(s1(w)) or math.isnan(s2(w)) or s2(w) == 0):
+        s1_w = s1(wavelengths)
+        s2_w = s2(wavelengths)
+
+        for s1w, s2w in zip(s1_w, s2_w):
+            if math.isnan(s1w) or math.isnan(s2w) or s2w == 0:
                 ps.append(0)
             else:
-                ps.append(s2(w) - s1(w))
+                ps.append(s2w - s1w)
         minp = min(ps)
         maxp = max(ps)
         for idx, p in enumerate(ps):
@@ -296,6 +299,3 @@ class p_map:  # defines methods for computing the penalty map (to increase or de
         c = x / lambda_min
         r = c * (r_min + (r_max - r_min) * (p ** nu))
         return r
-
-
-
