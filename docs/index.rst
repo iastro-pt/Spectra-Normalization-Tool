@@ -6,7 +6,7 @@
 SNT documentation
 =================
 
-SNT is a minimalistic library to normalize stellar spectra through convex-hull optimization. 
+SNT is a minimalistic library to normalize stellar spectra through alpha-shape optimization. 
 It supports stellar spectra in S1D or S2D format, either from numpy arrays or from `s-BART objects <https://github.com/iastro-pt/sBART/>`_
 
 
@@ -19,6 +19,6 @@ Table of Contents
 
    usage/installation
    usage/quickstart
-   usage/contribution
    usage/configuration
-   ...
+   usage/contribution
+   
