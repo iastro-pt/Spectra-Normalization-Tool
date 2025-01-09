@@ -1,6 +1,15 @@
-from typing import Optional, Dict, Any
+from typing import Any
 
-from SNT.configs import InternalParameters, DefaultValues, UserParam, IntegerValue, Positive_Value_Constraint, BooleanValue, ValueFromList, NumericValue
+from SNT.configs import (
+    InternalParameters,
+    DefaultValues,
+    UserParam,
+    IntegerValue,
+    Positive_Value_Constraint,
+    BooleanValue,
+    ValueFromList,
+    NumericValue,
+)
 
 from tabletexifier import Table
 
@@ -70,23 +79,44 @@ class SNT_Configs:
     )
 
     def __init__(self, **kwargs):
-
-        self._internal_configs = InternalParameters("SNT",
-                                                    self._default_params,
-                                                    )
+        self._internal_configs = InternalParameters(
+            "SNT",
+            self._default_params,
+        )
         self._internal_configs.receive_user_inputs(kwargs)
 
     def __getitem__(self, item):
         return self._internal_configs[item]
 
-    def get_value_of_item(self, item):
+    def get_value_of_item(self, item: str) -> Any:
+        """Get the current value of a configuration
+
+        Args:
+            item (str): Parameter name
+
+        Returns:
+            Any: Current value
+        """
         return self._internal_configs[item]
 
-    def get_description_of_property(self, name):
+    def get_description_of_property(self, name: str) -> str:
+        """Get the description of a parameter
+
+        Args:
+            name (str): Name of the parameter
+
+        Returns:
+            str: Textual description
+        """
         return self._internal_configs.get_description_of_config(name)
 
     def print_table_of_descriptions(self):
-        tab = Table(("Name", "description"), )
+        """
+        Print a description of every configurable parameter in the SNT module
+        """
+        tab = Table(
+            ("Name", "description"),
+        )
         for key in self._internal_configs.get_user_configs():
             tab.add_row((key, self.get_description_of_property(key)))
         print(tab)
