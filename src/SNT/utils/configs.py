@@ -78,7 +78,7 @@ class UserParam:
     @property
     def description(self) -> str:
         """Return description of the parameter."""
-        return self._comment if self._comment is not None else ""
+        return self._description if self._description is not None else ""
 
 
 class ConfigHolder:
