@@ -1,9 +1,9 @@
-import numpy as np
 import math
-from scipy import interpolate
-import scipy.constants as constant
-from scipy.signal import find_peaks
 from collections import deque
+
+import numpy as np
+from scipy import interpolate
+from scipy.signal import find_peaks
 
 
 def b_search(arr, x):
