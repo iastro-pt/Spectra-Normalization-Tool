@@ -7,54 +7,66 @@ from tabletexifier import Table
 
 class SNT_Configs:
     _default_params = DefaultValues(
-        remove_n_first=UserParam(default_value=3000,
-                                 constraint=Positive_Value_Constraint + IntegerValue,
-                                 comment="removes the first n points in the spectra (only if first points are not useful!) otherwise set to 0"
-                                 ),
-        radius_min=UserParam(default_value=20,
-                             constraint=Positive_Value_Constraint + IntegerValue,
-                             comment="min alpha shape radius"
-                             ),
-        radius_max=UserParam(default_value=70,
-                             constraint=Positive_Value_Constraint + IntegerValue,
-                             comment="max alpha shape radius (should be at least the size of the largest gap)"
-                             ),
-        max_vicinity=UserParam(default_value=10,
-                               constraint=Positive_Value_Constraint + IntegerValue,
-                               comment="required number of values between adjacent maxima"
-                               ),
-        stretching=UserParam(default_value=40,
-                             constraint=Positive_Value_Constraint + IntegerValue,
-                             comment="normalization parameter"
-                             ),
-        use_RIC=UserParam(default_value=True,
-                          constraint=BooleanValue,
-                          comment="use RIC to avoid large 'dips' in the continuum (see documentation)"
-                          ),
-        interp=UserParam(default_value="linear",
-                         constraint=ValueFromList(["cubic", "linear"]),
-                         comment="interpolation type"
-                         ),
-        use_denoise=UserParam(default_value=False,
-                              constraint=BooleanValue,
-                              comment="for noisy spectra use the average of the flux value around the maximum"
-                              ),
-        usefilter=UserParam(default_value=True,
-                            constraint=BooleanValue,
-                            comment="use savgol filter to smooth spectra "
-                            ),
-        nu=UserParam(default_value=1,
-                     constraint=NumericValue,
-                     comment="exponent of the computed penalty (see documentation)"
-                     ),
-        niter_peaks_remove=UserParam(default_value=10,
-                                     constraint=Positive_Value_Constraint + IntegerValue,
-                                     comment="number of iterations to remove sharpest peaks before interpolation"
-                                     ),
-        denoising_distance=UserParam(default_value=5,
-                                     constraint=Positive_Value_Constraint + IntegerValue,
-                                     comment="number of points to calculate the average around a maximum if use_denoise is True, useful for noisy spectra"
-                                     ),
+        remove_n_first=UserParam(
+            default_value=0,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="removes the first n points in the spectra (only if first points are not useful!) otherwise set to 0",
+        ),
+        radius_min=UserParam(
+            default_value=20,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="min alpha shape radius",
+        ),
+        radius_max=UserParam(
+            default_value=70,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="max alpha shape radius (should be at least the size of the largest gap)",
+        ),
+        max_vicinity=UserParam(
+            default_value=10,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="required number of values between adjacent maxima",
+        ),
+        stretching=UserParam(
+            default_value=40,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="normalization parameter",
+        ),
+        use_RIC=UserParam(
+            default_value=True,
+            constraint=BooleanValue,
+            comment="use RIC to avoid large 'dips' in the continuum (see documentation)",
+        ),
+        interp=UserParam(
+            default_value="linear",
+            constraint=ValueFromList(["cubic", "linear"]),
+            comment="interpolation type",
+        ),
+        use_denoise=UserParam(
+            default_value=False,
+            constraint=BooleanValue,
+            comment="for noisy spectra use the average of the flux value around the maximum",
+        ),
+        usefilter=UserParam(
+            default_value=True,
+            constraint=BooleanValue,
+            comment="use savgol filter to smooth spectra ",
+        ),
+        nu=UserParam(
+            default_value=1,
+            constraint=NumericValue,
+            comment="exponent of the computed penalty (see documentation)",
+        ),
+        niter_peaks_remove=UserParam(
+            default_value=10,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="number of iterations to remove sharpest peaks before interpolation",
+        ),
+        denoising_distance=UserParam(
+            default_value=5,
+            constraint=Positive_Value_Constraint + IntegerValue,
+            comment="number of points to calculate the average around a maximum if use_denoise is True, useful for noisy spectra",
+        ),
     )
 
     def __init__(self, **kwargs):
