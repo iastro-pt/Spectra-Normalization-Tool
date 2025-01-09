@@ -132,6 +132,9 @@ def normalize_row(wavelengths, spectra, FWHM, config):
     wavelengths_clip = wavelengths[remove_n_first:]
     spectra_clip = spectra[remove_n_first:]
 
+    inds = np.where(spectra_clip != 0)
+    wavelengths_clip = wavelengths_clip[inds]
+    spectra_clip = spectra_clip[inds]
     min_lambda = np.min(wavelengths_clip)
     FWHM_WL = min_lambda * (FWHM / (constant.c / 1000))  # FWHM in A
 
