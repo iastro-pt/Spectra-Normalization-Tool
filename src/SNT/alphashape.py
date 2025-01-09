@@ -1,8 +1,9 @@
 import math
+from collections import deque
+
 import numpy as np
 
-from SNT import smooth, penalty, alphashape
-from collections import deque
+from SNT import penalty, smooth
 
 
 def angle(Cx, Cy, Px, Py, r):
@@ -70,7 +71,7 @@ def anchors(
             delta_inv = np.array([-delta[1], delta[0]])
             h = math.sqrt((r**2) - ((delta_norm**2) / 4))
             C = P + (0.5 * delta) + ((h / delta_norm) * delta_inv)
-            A.append([Nidx, alphashape.angle(C[0], C[1], P[0], P[1], r)])  # save index and angle in A
+            A.append([Nidx, angle(C[0], C[1], P[0], P[1], r)])  # save index and angle in A
 
         min_val = min(A, key=lambda v: v[1])  # select the min angle
         min_idx = min_val[0]
