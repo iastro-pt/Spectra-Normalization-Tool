@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Dict, NoReturn, Optional
+from typing import TYPE_CHECKING, Any, NoReturn, Optional
 
-from loguru import logger
+from tabletexifier import Table
 
-from SNT.utils.exceptions import InternalError, InvalidConfiguration
-from SNT.utils.parameter_validators import Constraint
+from SNT.utils.exceptions import InvalidConfiguration
+
+if TYPE_CHECKING:
+    from SNT.utils.parameter_validators import Constraint
 
 
 class UserParam:
@@ -98,6 +99,10 @@ class ConfigHolder:
     def update_value(self, parameter_name: str, new_value: Any) -> None:
         self._config_values[parameter_name].update_value(new_value)
 
+    def update_values_from_dict(self, parameter_dict: dict[str, Any]) -> None:
+        for parameter_name, new_value in parameter_dict.items():
+            self._config_values[parameter_name].update_value(new_value)
+
     def validate_all(self) -> None:
         for parameter in self._config_values.values():
             parameter.validate()
@@ -105,3 +110,15 @@ class ConfigHolder:
     def get_all_current_values(self) -> dict[str, Any]:
         """Retrieve a dictionary with all current values."""
         return {i: j.current_value for i, j in self._config_values.items()}
+
+    def print_table_of_descriptions(self) -> None:
+        """Print a description of every configurable parameter in the SNT module."""
+        tab = Table(
+            ("Name", "description"),
+        )
+        for key, param in self._config_values.items():
+            tab.add_row((key, param.description))
+        print(tab)
+
+    def __getitem__(self, key: str) -> Any:
+        return self.get_current_value(key)
