@@ -47,7 +47,7 @@ class Constraint:
         for evaluator in self._constraint_list:
             evaluator(param_name, value)
 
-    def _evaluate(self, value: Any) -> None:
+    def _evaluate(self, param_name, value: Any) -> None:
         del value
 
     def __str__(self) -> str:
