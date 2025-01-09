@@ -1,2 +1,2 @@
 
-from .snt import normalize_spectra
+from .snt import normalize_spectra, normalize_sBART_object
