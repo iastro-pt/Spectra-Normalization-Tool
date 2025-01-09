@@ -14,9 +14,10 @@ version = "0.1.0"
 dependencies = [
     "astropy>=5.2.2",
     'importlib-metadata; python_version<"3.8"',
-    "loguru>=0.7.3",
+    "loguru>=0.6.0",
     "matplotlib>=3.7.5",
     "numpy>=1.24.4",
+    "sbart",
     "scipy>=1.10.1",
     "tabletexifier>=0.1.1",
 ]
@@ -26,6 +27,9 @@ package-dir = {"" = "src"}
 
 [tool.ruff.lint]
 select = ["ALL"]
+
+[tool.uv.sources]
+sbart = { git = "https://github.com/iastro-pt/sBART.git", branch = "dev" }
 
 [dependency-groups]
 dev = [
