@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 from SNT.snt import normalize_spectra
 
 
-def normalize_sBART_object(frame: "Frame", output_path, user_configs, store_to_disk):
+def normalize_sBART_object(frame: "Frame", output_path, user_configs, store_to_disk=True):
     wave, flux, _, _ = frame.get_data_from_full_spectrum()
 
     return normalize_spectra(
