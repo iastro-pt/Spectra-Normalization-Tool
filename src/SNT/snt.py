@@ -1,16 +1,13 @@
 from pathlib import Path
 from typing import Optional
 
-from astropy.io import fits
+import numpy as np
+import scipy.constants as constant
 from loguru import logger
 from matplotlib import pyplot as plt
-from scipy.signal import find_peaks
-from scipy.signal import savgol_filter
-import numpy as np
-import pickle
+from scipy.signal import find_peaks, savgol_filter
+
 from .proj_functions import *
-import scipy.constants as constant
-import sys
 
 
 def normalize_spectra(
