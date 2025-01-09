@@ -7,19 +7,19 @@ from loguru import logger
 from matplotlib import pyplot as plt
 from scipy.signal import find_peaks, savgol_filter
 
-from .proj_functions import *
+from .proj_functions import a_shape, continuum, p_map, smooth
 
 
 def normalize_spectra(
-        wavelengths,
-        spectra,
-        header,
-        output_path,
-        config,
-        FWHM_KW: Optional[str] = None,
-        FWHM_override: Optional[float] = None,
-        store_to_disk: bool = True
-        ):
+    wavelengths,
+    spectra,
+    header,
+    output_path,
+    config,
+    FWHM_KW: Optional[str] = None,
+    FWHM_override: Optional[float] = None,  # noqa: N803
+    store_to_disk: bool = True,
+):
 
     min_lambda = min(wavelengths)
     if FWHM_KW is None:
