@@ -30,6 +30,10 @@ select = ["ALL"]
 [dependency-groups]
 dev = [
     "pytest>=8.3.4",
+    "sphinx-book-theme>=0.0.39",
+    "sphinx>=7.1.2",
+    "nbsphinx>=0.9.6",
+    "ipykernel>=6.29.5",
 ]
 
 [tool.ruff]
