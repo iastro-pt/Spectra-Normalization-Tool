@@ -11,10 +11,9 @@ from loguru import logger
 from matplotlib import pyplot as plt
 from scipy.signal import find_peaks, savgol_filter
 
+from SNT import alphashape, interpolators, penalty, smooth
 from SNT.utils.json_compatible import json_ready_converter
 from SNT.utils.SNT_configs import construct_SNT_configs
-
-from .proj_functions import a_shape, continuum, p_map, smooth
 
 if TYPE_CHECKING:
     from SBART.Base_Models import Frame
@@ -158,12 +157,12 @@ def normalize_row(wavelengths, spectra, FWHM, config):
     if usefilter:
         spectra_clip = savgol_filter(spectra_clip, window_length=11, polyorder=3)
 
-    s1 = p_map.rolling_max(spectra_clip, wavelengths_clip, FWHM_WL * 40)
-    s2 = p_map.rolling_max(spectra_clip, wavelengths_clip, FWHM_WL * 40 * 10)
+    s1 = penalty.rolling_max(spectra_clip, wavelengths_clip, FWHM_WL * 40)
+    s2 = penalty.rolling_max(spectra_clip, wavelengths_clip, FWHM_WL * 40 * 10)
 
-    ps = p_map.penalty(s1, s2, wavelengths_clip)
+    ps = penalty.penalty(s1, s2, wavelengths_clip)
     step = 1 if radius_max < 4 else radius_max / 4
-    step_y, step_x = p_map.step_transform(ps, wavelengths_clip, step)
+    step_y, step_x = penalty.step_transform(ps, wavelengths_clip, step)
 
     # ----------Alpha shape maxima selection---------------------
 
@@ -171,7 +170,7 @@ def normalize_row(wavelengths, spectra, FWHM, config):
     wavelengths_a = np.array(wavelengths_clip)
     max_ys = peaks["peak_heights"]
     max_pos = wavelengths_a[max_index]
-    anchors_x, anchors_y, anchors_idx = a_shape.anchors(
+    anchors_x, anchors_y, anchors_idx = alphashape.anchors(
         max_index,
         spectra_clip,
         wavelengths_clip,
@@ -195,12 +194,12 @@ def normalize_row(wavelengths, spectra, FWHM, config):
     if use_denoise:
         smooth.denoise(anchors_y, anchors_idx, spectra_clip, denoising_distance)
 
-    fx = continuum.interpolate(anchors_x, anchors_y, interp_type=interp)
+    fx = interpolators.interpolate_wrapper(anchors_x, anchors_y, interp_type=interp)
     fit_metrics = {
         "anchors_x": anchors_x,
         "anchors_y": anchors_y,
-        "max_pos": max_pos,
-        "max_ys": max_ys,
+        "max_pos": max_pos.tolist(),
+        "max_ys": max_ys.tolist(),
         "step_y": step_y,
         "step_x": step_x,
         "ps": ps,
