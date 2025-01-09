@@ -26,6 +26,7 @@ def normalize_spectra(
     FWHM_KW: Optional[str] = None,
     FWHM_override: Optional[float] = None,  # noqa: N803
     store_to_disk: bool = True,
+    fname: str | None = None,
 ):
     wavelengths = np.asarray(wavelengths)
     spectra = np.asarray(spectra)
@@ -77,7 +78,7 @@ def normalize_spectra(
         logger.info(f"Data storage folder set to {output_path}")
         logger.info("Saving text files")
 
-        with open(output_path / "anchors.csv", mode="w") as tow:
+        with open(output_path / f"{fname}_anchors.csv", mode="w") as tow:
             json.dump(fp=tow, obj=json_ready_converter(byproducts))
 
         array1 = wavelengths.T
@@ -87,7 +88,7 @@ def normalize_spectra(
         merged_array[:, ::2] = array1
         merged_array[:, 1::2] = array2
 
-        np.savetxt(fname=output_path / "continuum.txt", X=merged_array, delimiter=",", header="wave, flux")
+        np.savetxt(fname=output_path / f"{fname}_continuum.txt", X=merged_array, delimiter=",", header="wave, flux")
         if config["run_plot_generation"]:
             logger.info("Generating plots")
             fig, ax = plt.subplots(2, sharex=True)
@@ -105,7 +106,7 @@ def normalize_spectra(
                 ax[1].plot(a, b, color="black")
             ax[1].set_xlabel("wavelengths")
             ax[1].set_ylabel("RIC")
-            fig.savefig(output_path / "continuum_plot.png", dpi=600)
+            fig.savefig(output_path / f"{fname}_continuum_plot.png", dpi=600)
             # ----------------------------------
     else:
         logger.warning("Disabled disk storage of data products")
