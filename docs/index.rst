@@ -18,7 +18,7 @@ Table of Contents
    :maxdepth: 2
 
    usage/installation
-   usage/quick
+   usage/quickstart
    usage/contribution
    usage/configuration
    ...
