@@ -3,7 +3,7 @@ import multiprocessing
 from collections import defaultdict
 from functools import partial
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional
+from typing import Any, Optional
 
 import numpy as np
 import scipy.constants as constant
@@ -13,24 +13,6 @@ from scipy.signal import find_peaks, savgol_filter
 
 from SNT import alphashape, interpolators, penalty, smooth
 from SNT.utils.SNT_configs import construct_SNT_configs
-
-if TYPE_CHECKING:
-    from SBART.Base_Models import Frame
-
-
-def normalize_sBART_object(frame: "Frame", output_path, user_configs, store_to_disk):
-    wave, flux, _, _ = frame.get_data_from_full_spectrum()
-
-    return normalize_spectra(
-        wavelengths=wave,
-        spectra=flux,
-        header={},
-        FWHM_override=frame.get_KW_value("FWHM"),
-        fname=frame.fname,
-        store_to_disk=store_to_disk,
-        output_path=output_path,
-        user_config=user_configs,
-    )
 
 
 def normalize_spectra(
