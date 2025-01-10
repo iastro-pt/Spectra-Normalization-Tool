@@ -15,7 +15,7 @@ pip install .
 
 ## How to use:
 
-See the jupyter notebook in the examples folder
+See the jupyter notebook in the docs/quickstart.ipynb folder
 
 ## Configuring the tool
 
@@ -24,9 +24,9 @@ The algorithm allows some configuration/tuning of the initial parameters.
 Either do:
 
 ```python
-from SNT import SNT_Configs
-config = SNT_Configs()
-config.get_description_of_property("remove_n_first")
+from SNT.utils.SNT_configs import construct_SNT_configs
+confs = construct_SNT_configs()
+confs.print_table_of_descriptions()
 ```
 
 Or check the full table that is provided here:
