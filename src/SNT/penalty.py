@@ -35,6 +35,11 @@ def rolling_max(ys, xs, w_size):
             if i == (len(xs) - 1):
                 flag = 1
                 break
+        if len(points_cont) == 0:
+            # If there are gaps in the data, keep on increasing the
+            # window edge
+            end_inter += w_size
+            continue
         max_p = max(points_cont, key=lambda v: v[1])
         x_cont.append(max_p[0])
         y_cont.append(max_p[1])
