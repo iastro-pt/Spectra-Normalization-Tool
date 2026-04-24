@@ -21,13 +21,13 @@ _default_params = {
     "radius_min": UserParam(
         name="radius_min",
         default_value=20,
-        constraints=Positive_Value_Constraint + IntegerValue,
+        constraints=Positive_Value_Constraint,
         description="min alpha shape radius",
     ),
     "radius_max": UserParam(
         name="radius_max",
         default_value=70,
-        constraints=Positive_Value_Constraint + IntegerValue,
+        constraints=Positive_Value_Constraint,
         description="max alpha shape radius (should be at least the size of the largest gap)",
     ),
     "max_vicinity": UserParam(
