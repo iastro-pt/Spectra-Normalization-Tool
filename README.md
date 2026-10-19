@@ -1,5 +1,7 @@
 # Spectra-Normalization-Tool
-Spectre Normalization Tool (SNT)
+Spectra Normalization Tool (SNT)
+
+[![DOI](https://zenodo.org/badge/657616915.svg)](https://doi.org/10.5281/zenodo.23470218)
 
 ## Installation:
 
